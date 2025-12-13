@@ -11,7 +11,7 @@ interface Props {
 const { 
   title, 
   description = "高師大附中自治法規共用系統，彙編高師大附中學生會所有自治法規的展示網站。", 
-  image = "/img/Preview 3.png" 
+  image = "/concentric-law/img/Preview 3.png" 
 } = Astro.props;
 
 const siteName = "高師大附中學生會自治法規共用系統";
@@ -36,8 +36,8 @@ const fullTitle = title === siteName ? title : `${title} - ${siteName}`; // 邏�
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
 
-<link rel="shortcut icon" href="/img/icon.ico" type="image/x-icon" />
-<link rel="manifest" href="/config/manifest.json" />
+<link rel="shortcut icon" href="/concentric-law/img/icon.ico" type="image/x-icon" />
+<link rel="manifest" href="/concentric-law/config/manifest.json" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

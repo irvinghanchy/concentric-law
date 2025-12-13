@@ -8,12 +8,12 @@
   "theme_color": "#000000",
   "icons": [
     {
-      "src": "/img/icon-194.png",
+      "src": "/concentric-law/img/icon-194.png",
       "sizes": "194x194",
       "type": "image/png"
     },
     {
-      "src": "/img/icon-512.png",
+      "src": "/concentric-law/img/icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
@@ -23,15 +23,15 @@
       "name": "組織章程",
       "short_name": "組織章程",
       "description": "閱讀本會組織章程",
-      "url": "/act/act01",
-      "icons": [{ "src": "/img/shortcuts01-512.png", "sizes": "512x512" }]
+      "url": "/concentric-law/act/act01",
+      "icons": [{ "src": "/concentric-law/img/shortcuts01-512.png", "sizes": "512x512" }]
     },
     {
       "name": "學生會官網",
       "short_name": "SA 官網",
       "description": "前往學生會官方網站！",
       "url": "https://sites.google.com/stu.nknush.kh.edu.tw/ashssa",
-      "icons": [{ "src": "/img/shortcuts02-512.png", "sizes": "512x512" }]
+      "icons": [{ "src": "/concentric-law/img/shortcuts02-512.png", "sizes": "512x512" }]
     }
   ]
 }
