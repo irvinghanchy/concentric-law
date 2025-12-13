@@ -1,8 +1,8 @@
 {
-  "name": "高師大附中學生會自治法規共用系統",
-  "short_name": "SA Law",
+  "name": "高師大附中學生會自治法規共用系統（c3c版）",
+  "short_name": "SA Law c3c",
   "description": "高師大附中自治法規共用系統，彙編高師大附中學生會所有自治法規的展示網站，在這裡可以找到高師大附中附中的所有學生會自治法規。",
-  "start_url": "/laws/",
+  "start_url": "/concentric-law/",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
@@ -23,7 +23,7 @@
       "name": "組織章程",
       "short_name": "組織章程",
       "description": "閱讀本會組織章程",
-      "url": "/act01.html",
+      "url": "/act/act01",
       "icons": [{ "src": "/img/shortcuts01-512.png", "sizes": "512x512" }]
     },
     {
