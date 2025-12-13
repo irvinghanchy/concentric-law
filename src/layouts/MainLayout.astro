@@ -1,0 +1,67 @@
+---
+import '../styles/global.css'; // 引入您原本的 CSS 檔案
+
+const { title } = Astro.props;
+const siteName = "高師大附中學生會自治法規共用系統";
+const description = "彙編高師大附中學生會所有自治法規的展示網站。";
+---
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title ? `${title} - ${siteName}` : siteName}</title>
+    
+    <meta property="og:title" content={title ? `${title} - ${siteName}` : siteName}>
+    <meta property="og:description" content={description}>
+    <meta property="og:image" content="/img/Preview 3.png">
+    <meta property="og:type" content="website">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+    <link rel="shortcut icon" href="/img/icon.ico" type="image/x-icon">
+    <link rel="manifest" href="/config/manifest.json">
+
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 350, 'GRAD' 0, 'opsz' 20;
+            font-size: inherit;
+        }
+    </style>
+</head>
+<body class="bg-base-100 text-base-content font-sans">
+
+    <header id="main-header" class="site-header p-4 shadow-sm bg-base-100 sticky top-0 z-50">
+        <div class="container mx-auto">
+            <p>頁首載入中... (建議未來替換為真正的導覽列組件)</p>
+        </div>
+    </header>
+
+    <main class="main-content min-h-screen container mx-auto px-4 py-8">
+        <slot /> </main>
+
+    <footer id="main-footer" class="site-footer p-10 bg-neutral text-neutral-content mt-10">
+        <div class="container mx-auto">
+            <p>頁尾載入中... (Copyright © 高師大附中學生會)</p>
+        </div>
+    </footer>
+
+    <button id="scrollToTopBtn" class="btn btn-circle btn-primary fixed bottom-8 right-8 shadow-lg z-50 hidden" title="回到頂部">
+        TOP
+    </button>
+
+    <script is:inline src="/script.js"></script>
+    
+    <script>
+        const btn = document.getElementById('scrollToTopBtn');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 200) btn?.classList.remove('hidden');
+            else btn?.classList.add('hidden');
+        });
+        btn?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    </script>
+</body>
+</html>
