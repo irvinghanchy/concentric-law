@@ -11,8 +11,8 @@
 @font-face {
     font-family: 'GlowSans';
     src:
-        url('../fonts/GlowSansTCCompressed-Bold.woff2') format('woff2'),
-        url('../fonts/GlowSansTCCompressed-Bold.woff') format('woff');
+        url('/fonts/GlowSansTCCompressed-Bold.woff2') format('woff2'),
+        url('/fonts/GlowSansTCCompressed-Bold.woff') format('woff');
     font-weight: bold;
     font-style: normal;
 }
@@ -20,7 +20,7 @@
 @font-face {
     font-family: 'SourceSans';
     src:
-        url('../fonts/SourceSans3-Light.otf.woff2') format('woff2');
+        url('/fonts/SourceSans3-Light.otf.woff2') format('woff2');
     font-weight: thin;
     font-style: normal;
 }

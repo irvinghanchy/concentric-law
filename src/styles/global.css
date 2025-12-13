@@ -1,4 +1,4 @@
-/* input.css：最主要的 CSS */
+/* global.css：最主要的 CSS */
 
 /* import 字體 from Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wdth,wght@0,62.5,500;1,62.5,500&display=swap');
@@ -10,11 +10,11 @@
 
 /* import Daisy UI */
 @import "tailwindcss" ;
-@source "../*.{html,js}";
+/* @source "../*.{html,js}";
 @source "../act/*.{html,js}";
 @source "../components/*.{html,js}";
 @source "../assets/*.{html,js}";
-@source "../assets/*.{html,js}";
+@source "../assets/*.{html,js}"; */
 @plugin "daisyui" {
     themes: corporate --default, dracula --prefersdark, retro, cyberpunk, valentine, aqua, lemonade, abyss;
 }

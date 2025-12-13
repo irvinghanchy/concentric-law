@@ -5,23 +5,28 @@ import Footer from '../components/Footer.astro';
 import ActionButtons from '../components/ActionButtons.astro';
 import PageSearch from '../components/PageSearch.astro';
 import ScrollToTop from '../components/ScrollToTop.astro';
+import BaseHead from '../components/BaseHead.astro';
 
 const { title } = Astro.props;
 ---
-<html lang="zh-TW"> <body>
-    
+<html lang="zh-TW">
+<head>
+    <BaseHead title={title} />
+</head>
+
+<body>
     <Navbar />
 
-    <main class="main-content container mx-auto px-4 py-8 flex-1 relative">
-        <ActionButtons /> <div class="law-content">
-            <slot /> </div>
+    <main class="main-content">
+        <ActionButtons />
+        <div class="law-content">
+            <slot />
+        </div>
 
-        <PageSearch /> </main>
-
-    <ScrollToTop />
+        <PageSearch />
+        <ScrollToTop /> 
+    </main>
     <Footer />
-
-    <script is:inline src="/main.js"></script>
 </body>
 </html>
 
