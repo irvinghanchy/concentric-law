@@ -6,7 +6,7 @@
         width: 95%; /* 在更小的螢幕上寬度更大 */
         margin: 1.5rem auto;
         padding: 1.5rem 1rem;
-        margin-top: 6rem;
+        /* margin-top: 6rem; */
     }
     .page-title {
         font-size: 1.5em;
