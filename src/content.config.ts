@@ -13,6 +13,7 @@ const act = defineCollection({
   schema: z.object({
     title: z.string(), // 標題為必填字串
     // 如果未來 Markdown 開頭有其他欄位 (如 date, tags)，請在這裡補上
+    abbr: z.string().optional(),
   }),
 });
 

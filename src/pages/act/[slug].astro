@@ -2,12 +2,14 @@
 import { getCollection } from 'astro:content';
 import LawLayout from '../../layouts/LawLayout.astro';
 import { parseLawMarkdown } from '../../utils/lawParser';
+import ActionButtons from '../../components/ActionButtons.astro';
+
 
 // 1. 生成靜態路徑
 export async function getStaticPaths() {
   const act = await getCollection('act');
   return act.map(entry => ({
-    params: { slug: entry.slug },
+    params: { slug: entry.id },
     props: { entry },
   }));
 }
@@ -16,17 +18,20 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 // entry.body 包含原始 Markdown 文字
 const lawData = parseLawMarkdown(entry.body);
+
+// 邏輯：如果有設定 abbr 就用 abbr，否則回退使用 title
+const browserTitle = entry.data.abbr || entry.data.title;
 ---
 
-<LawLayout title={entry.data.title}>
+<LawLayout title={browserTitle}>
   
   <main class="main-content">
     
     <h2 class="page-title">{entry.data.title}</h2>
 
     {lawData.history.length > 0 && (
-      <section class="amendment-history bg-base-200 text-base-content p-4 rounded-lg mb-6">
-        <h3 class="font-bold text-lg mb-2">修法歷程</h3>
+      <section class="amendment-history">
+        <h3>修法歷程</h3>
         <ul class="list-disc pl-5">
           {lawData.history.map((item) => (
             <li>{item}</li>
@@ -35,34 +40,65 @@ const lawData = parseLawMarkdown(entry.body);
       </section>
     )}
 
+        <ActionButtons />
+
     <article class="regulation-content">
       {lawData.articles.map((item) => {
         // 渲染章 (h3)
         if (item.type === 'chapter') {
-          return <h3 class="text-xl font-bold mt-6 mb-4">{item.text}</h3>;
+          return <h3>{item.text}</h3>;
         }
         // 渲染節 (h4)
         if (item.type === 'section') {
-          return <h4 class="text-lg font-bold mt-4 mb-2">{item.text}</h4>;
+          return <h4>{item.text}</h4>;
         }
-        // 渲染條文 (Row) -> 這是您最在意的結構
+        // 渲染條文 (Row) 
         if (item.type === 'article') {
           return (
-            <div class="row flex gap-4 mb-4 border-b border-base-200 pb-4 last:border-0">
+            <div class="row">
               {/* 條號 */}
-              <span class="art font-mono font-bold text-primary min-w-[4rem]">
+              <span class="art">
                 第{item.number}條
               </span>
               
               {/* 條文內容區塊 */}
               <div class="art-data flex-1">
                 {/* 備註 (如果有) */}
-                {item.note && <p class="art-note text-sm text-gray-500 mb-1">（{item.note}）</p>}
+                {item.note && <p class="art-note">（{item.note}）</p>}
                 
-                {/* 內文段落 (map 渲染多個 .par) */}
-                {item.paragraphs.map(par => (
-                  <div class="par mb-2 leading-relaxed">{par}</div>
-                ))}
+                {/* 內文段落邏輯開始 */}
+                {item.paragraphs.map((par) => {
+                  const text = par.trim();
+                  let pClass = "par";
+                  let marker = ""; // 用來存編號
+                  let content = text; // 用來存內文
+
+                  // 1. 判斷並提取 (1) 或 （1）
+                  const itemMatch = text.match(/^([（(]\d+[）)])\s*(.*)/);
+                  if (itemMatch) {
+                    pClass = "item";
+                    marker = itemMatch[1];
+                    content = itemMatch[2].trim();
+                  } 
+                  // 2. 判斷並提取 1 或 1.
+                  else {
+                    // 這裡同時支援 "1" 或 "1." 兩種寫法，視您的 Markdown 習慣而定
+                    const subMatch = text.match(/^(\d+\.?)\s*(.*)/);
+                    if (subMatch) {
+                      pClass = "sub";
+                      marker = subMatch[1];
+                      content = subMatch[2].trim();
+                    }
+                  }
+
+                  return (
+                    <div class={pClass}>
+                      {/* 如果有編號，顯示編號 span；沒有則不顯示 */}
+                      {marker && <span class="num-marker">{marker}</span>}{content.trim()}
+                    </div>
+                  );
+                })}
+                {/* 內文段落邏輯結束 */}
               </div>
             </div>
           );
@@ -71,14 +107,14 @@ const lawData = parseLawMarkdown(entry.body);
     </article>
 
     {lawData.attachments.length > 0 && (
-      <section class="attachments-list mt-8">
-        <h3 class="text-lg font-bold mb-4 border-l-4 border-secondary pl-3">本法附件</h3>
-        <ul class="attachments grid gap-4">
+      <section class="attachments-list">
+        <h3 >本法附件</h3>
+        <ul class="attachments">
           {lawData.attachments.map((att) => (
             <li>
-              <a href={att.url} target="_blank" class="flex items-center gap-3 p-3 bg-base-100 border rounded hover:bg-base-200 transition">
-                <span class="att-no badge badge-neutral">{att.no}</span>
-                <span class="att-title font-medium">{att.title}</span>
+              <a href={att.url} target="_blank" class="transition">
+                <span class="att-no">{att.no}</span>
+                <span class="att-title">{att.title}</span>
                 {/* 您可以加上 PDF 圖示 */}
               </a>
             </li>

@@ -33,7 +33,7 @@ export function parseLawMarkdown(mdContent) {
       currentSection = 'content';
       continue;
     }
-    if (line.includes('本法附件')) { // 偵測到附件區塊開始
+    if (line.includes('## 本法附件')) { // 偵測到附件區塊開始
         flushArticle(); // 結束最後一條條文
         currentSection = 'attachments';
         continue;
@@ -61,7 +61,7 @@ export function parseLawMarkdown(mdContent) {
       else if (line.match(/^第\s*(\d+(?:-\d+)?)\s*條/)) {
         flushArticle(); // 存入上一條
         
-        const match = line.match(/^第\s*(\d+(?:-\d+)?)\s*條(?:（(.*?)）)?/);
+        const match = line.match(/^第\s*(\d+(?:-\d+)?)\s*條(?:\s*[（(](.*?)[）)])?/);
         currentArticle = {
           number: match[1], // 條號
           note: match[2] || null, // 備註 (括號內的字)

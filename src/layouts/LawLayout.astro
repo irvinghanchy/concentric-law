@@ -2,7 +2,6 @@
 import '../styles/global.css';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
-import ActionButtons from '../components/ActionButtons.astro';
 import PageSearch from '../components/PageSearch.astro';
 import ScrollToTop from '../components/ScrollToTop.astro';
 import BaseHead from '../components/BaseHead.astro';
@@ -18,7 +17,6 @@ const { title } = Astro.props;
     <Navbar />
 
     <main class="main-content">
-        <ActionButtons />
         <div class="law-content">
             <slot />
         </div>
@@ -33,3 +31,17 @@ const { title } = Astro.props;
 <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="../scripts/main.js"></script>
+<script>
+//  將條內單一「項」par加上 only-one-par 類別
+const artDataElements = document.querySelectorAll('.art-data');
+artDataElements.forEach(artData => {
+    const parElements = artData.querySelectorAll('.par');
+    const firstPar = artData.querySelector('.par');
+
+    if (parElements.length === 1 && firstPar) {
+        firstPar.classList.add('only-one-par');
+    } else if (firstPar) {
+        firstPar.classList.remove('only-one-par');
+    }
+});
+</script>
