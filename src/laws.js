@@ -1,7 +1,7 @@
 // src/laws.js
 export const lawSections = [
     {
-        title: "學生會內法規彙編", 
+        title: "學生會自治法規彙編", 
         items: [
             { name: "學生會組織章程", path: "/act/act01" },
             { name: "學生會學生代表法", path: "/act/act02" },
