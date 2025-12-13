@@ -5,8 +5,8 @@ import { parseLawMarkdown } from '../../utils/lawParser';
 
 // 1. 生成靜態路徑
 export async function getStaticPaths() {
-  const acts = await getCollection('acts');
-  return acts.map(entry => ({
+  const act = await getCollection('act');
+  return act.map(entry => ({
     params: { slug: entry.slug },
     props: { entry },
   }));
