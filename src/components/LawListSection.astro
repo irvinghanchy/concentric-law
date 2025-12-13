@@ -2,18 +2,18 @@
 const { title, items } = Astro.props;
 ---
 
-<ul class="law-list list mb-8 shadow-sm rounded-box bg-base-100 border border-base-200">
-    <li class="law-list-title bg-base-200 p-3 font-bold text-lg rounded-t-box">
+<ul class="law-list list">
+    <li class="law-list-title">
         {title}
     </li>
 
     {items.map((item, index) => (
-        <li class="list-row flex items-center p-3 border-b border-base-200 last:border-none hover:bg-base-100 transition-colors">
-            <div class="no font-mono font-bold text-primary mr-4 w-8 text-center">
+        <li class="list-row">
+            <div class="no">
                 {(index + 1).toString().padStart(2, '0')}
             </div>
             
-            <a class="law-name flex-1 text-base hover:text-primary hover:underline underline-offset-4" href={item.path}>
+            <a class="law-name" href={item.path}>
                 {item.name}
             </a>
         </li>

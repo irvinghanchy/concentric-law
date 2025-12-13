@@ -1,0 +1,30 @@
+---
+import '../styles/global.css';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import ActionButtons from '../components/ActionButtons.astro';
+import PageSearch from '../components/PageSearch.astro';
+import ScrollToTop from '../components/ScrollToTop.astro';
+
+const { title } = Astro.props;
+---
+<html lang="zh-TW"> <body>
+    
+    <Navbar />
+
+    <main class="main-content container mx-auto px-4 py-8 flex-1 relative">
+        <ActionButtons /> <div class="law-content">
+            <slot /> </div>
+
+        <PageSearch /> </main>
+
+    <ScrollToTop />
+    <Footer />
+
+    <script is:inline src="/main.js"></script>
+</body>
+</html>
+
+<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="../scripts/main.js"></script>

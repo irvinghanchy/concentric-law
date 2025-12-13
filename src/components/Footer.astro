@@ -1,1 +1,28 @@
-
+---
+// src/components/Footer.astro
+const currentYear = new Date().getFullYear();
+// 取得當前建置時間格式化字串
+const buildTime = new Date().toLocaleDateString('zh-TW', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+});
+---
+<footer class="footer sm:footer-horizontal items-center flex flex-col justify-center bg-base-200 text-base-content p-8 px-10 lg:py-6 mt-auto">
+    <nav class="text-center">
+        <p class="text-balance">
+            <a href="https://sites.google.com/stu.nknush.kh.edu.tw/ashssa/mac" class="hover:underline">
+                國立高雄師範大學附屬高級中學學生會<br class="footer-block">
+            </a> 
+            2024-{currentYear} All Rights Reserved.
+        </p>
+        <p class="text-xs mt-2 opacity-70">網站最後更新時間：{buildTime}</p>
+    </nav>
+    <nav class="flex justify-center mt-2">
+        <div class="join join-vertical sm:join-horizontal">
+            <a class="btn btn-ghost join-item break-keep" href="/laws/contact_us">聯絡我們</a>
+            <a class="btn btn-ghost join-item break-keep" href="https://ashssa-law-blog.netlify.app/">部落格</a>
+            <a class="btn btn-ghost join-item break-keep" href="/laws/sources.html">Sources</a>
+        </div>
+    </nav>
+</footer>

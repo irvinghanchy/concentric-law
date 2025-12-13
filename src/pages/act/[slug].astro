@@ -1,0 +1,91 @@
+---
+import { getCollection } from 'astro:content';
+import LawLayout from '../../layouts/LawLayout.astro';
+import { parseLawMarkdown } from '../../utils/lawParser';
+
+// 1. 生成靜態路徑
+export async function getStaticPaths() {
+  const acts = await getCollection('acts');
+  return acts.map(entry => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+// 2. 獲取內容並解析
+const { entry } = Astro.props;
+// entry.body 包含原始 Markdown 文字
+const lawData = parseLawMarkdown(entry.body);
+---
+
+<LawLayout title={entry.data.title}>
+  
+  <main class="main-content">
+    
+    <h2 class="page-title">{entry.data.title}</h2>
+
+    {lawData.history.length > 0 && (
+      <section class="amendment-history bg-base-200 text-base-content p-4 rounded-lg mb-6">
+        <h3 class="font-bold text-lg mb-2">修法歷程</h3>
+        <ul class="list-disc pl-5">
+          {lawData.history.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <article class="regulation-content">
+      {lawData.articles.map((item) => {
+        // 渲染章 (h3)
+        if (item.type === 'chapter') {
+          return <h3 class="text-xl font-bold mt-6 mb-4">{item.text}</h3>;
+        }
+        // 渲染節 (h4)
+        if (item.type === 'section') {
+          return <h4 class="text-lg font-bold mt-4 mb-2">{item.text}</h4>;
+        }
+        // 渲染條文 (Row) -> 這是您最在意的結構
+        if (item.type === 'article') {
+          return (
+            <div class="row flex gap-4 mb-4 border-b border-base-200 pb-4 last:border-0">
+              {/* 條號 */}
+              <span class="art font-mono font-bold text-primary min-w-[4rem]">
+                第{item.number}條
+              </span>
+              
+              {/* 條文內容區塊 */}
+              <div class="art-data flex-1">
+                {/* 備註 (如果有) */}
+                {item.note && <p class="art-note text-sm text-gray-500 mb-1">（{item.note}）</p>}
+                
+                {/* 內文段落 (map 渲染多個 .par) */}
+                {item.paragraphs.map(par => (
+                  <div class="par mb-2 leading-relaxed">{par}</div>
+                ))}
+              </div>
+            </div>
+          );
+        }
+      })}
+    </article>
+
+    {lawData.attachments.length > 0 && (
+      <section class="attachments-list mt-8">
+        <h3 class="text-lg font-bold mb-4 border-l-4 border-secondary pl-3">本法附件</h3>
+        <ul class="attachments grid gap-4">
+          {lawData.attachments.map((att) => (
+            <li>
+              <a href={att.url} target="_blank" class="flex items-center gap-3 p-3 bg-base-100 border rounded hover:bg-base-200 transition">
+                <span class="att-no badge badge-neutral">{att.no}</span>
+                <span class="att-title font-medium">{att.title}</span>
+                {/* 您可以加上 PDF 圖示 */}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+  </main>
+</LawLayout>
