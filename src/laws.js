@@ -11,6 +11,7 @@ export const lawSections = [
             { name: "學生會經費法", path: "/concentric-law/act/act06" },
             { name: "自治法規標準法", path: "/concentric-law/act/act07" },
             { name: "學生政黨法", path: "/concentric-law/act/act08" },
+            { name: "議會會議彈性運作臨時條例", path: "/concentric-law/act/act09" },
         ]
     },
     {
