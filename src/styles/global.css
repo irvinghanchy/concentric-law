@@ -13,8 +13,8 @@
 @font-face {
     font-family: 'GlowSans';
     src:
-        url('/fonts/GlowSansTCCompressed-Bold.woff2') format('woff2'),
-        url('/fonts/GlowSansTCCompressed-Bold.woff') format('woff');
+        url('../fonts/GlowSansTCCompressed-Bold.woff2') format('woff2'),
+        url('../fonts/GlowSansTCCompressed-Bold.woff') format('woff');
     font-weight: bold;
     font-style: normal;
 }

@@ -1,10 +1,18 @@
 ---
 // src/components/ActionButtons.astro
+// 接收外部傳入的參數
+const { url } = Astro.props;
+
+// 設定按鈕預設網址
+const defaultUrl = "https://sites.google.com/a/stu.nknush.kh.edu.tw/ashs_sp/laws/修法歷程";
+
+// 決定最終使用的網址：如果有傳入就用傳入的，沒有就用預設的
+const finalUrl = url || defaultUrl;
 ---
 <nav class="grid grid-flow-col-3 min-[397px]:grid-flow-col gap-5 md:mx-2 print:hidden my-4">
   <button class="btn btn-neutral" id="backBtn">回上頁</button>
   
-  <a href="https://sites.google.com/a/stu.nknush.kh.edu.tw/ashs_sp/laws/修法歷程" target="_blank" class="btn btn-neutral">
+  <a href={finalUrl} target="_blank" class="btn btn-neutral">
     法規沿革
   </a>
   

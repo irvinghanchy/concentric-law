@@ -23,7 +23,10 @@ const lawData = parseLawMarkdown(entry.body);
 const browserTitle = entry.data.abbr || entry.data.title;
 ---
 
-<LawLayout title={browserTitle}>
+<LawLayout 
+  title={browserTitle}
+  url={entry.data.url}
+>
   
   <main class="main-content">
     
@@ -40,7 +43,7 @@ const browserTitle = entry.data.abbr || entry.data.title;
       </section>
     )}
 
-        <ActionButtons />
+    <ActionButtons url={entry.data.url} />
 
     <article class="regulation-content">
       {lawData.articles.map((item) => {
