@@ -1,0 +1,59 @@
+---
+import { getCollection } from 'astro:content';
+import LawLayout from '../../layouts/LawLayout.astro';
+
+export async function getStaticPaths() {
+  const oldActs = await getCollection('old-act');
+  return oldActs.map(entry => ({
+    // 註: 根據 Astro 版本，這裡可能是 entry.slug 或 entry.id
+    params: { slug: entry.id || entry.slug }, 
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+// 使用 Astro 原生的渲染器，它會回傳一個 <Content /> 組件
+const { Content } = await entry.render(); 
+---
+
+<LawLayout title={entry.data.title} historyUrl={entry.data.historyUrl}>
+  
+  <main class="main-content">
+    
+    <h2 class="page-title text-2xl font-bold mb-6 flex items-center gap-3">
+        <span class="badge badge-error badge-outline">已廢止</span>
+        {entry.data.title}
+    </h2>
+
+    <div class="custom-markdown-content bg-base-100 p-6 rounded-box shadow-sm border border-base-200">
+        <Content />
+    </div>
+
+  </main>
+</LawLayout>
+
+<!-- <style is:global>
+    /* 針對這些原生的 Markdown 元素撰寫 CSS，確保排版好看 */
+    .custom-markdown-content h2 {
+        @apply text-xl font-bold mt-8 mb-4 border-b pb-2 text-primary;
+    }
+    .custom-markdown-content h3 {
+        @apply text-lg font-bold mt-6 mb-3;
+    }
+    .custom-markdown-content p {
+        @apply mb-4 leading-relaxed;
+    }
+    .custom-markdown-content ul {
+        @apply list-disc list-outside ml-6 mb-4 space-y-2;
+    }
+    .custom-markdown-content ol {
+        @apply list-decimal list-outside ml-6 mb-4 space-y-2;
+    }
+    /* 表格樣式 (對應 old-act01 的組織圖) */
+    .custom-markdown-content table {
+        @apply table table-zebra w-full my-6 border border-base-300;
+    }
+    .custom-markdown-content th {
+        @apply bg-base-200;
+    }
+</style> -->

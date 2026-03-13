@@ -24,8 +24,8 @@ export const lawSections = [
     {
         title: "已廢止法規",
         items: [
-            { name: "學生會組織辦法", path: "/concentric-law/act/old-act01" },
-            { name: "學生議員選舉及罷免辦法", path: "/concentric-law/act/old-act02" },
+            { name: "學生會組織辦法", path: "/concentric-law/old-act/old-act01" },
+            { name: "學生議員選舉及罷免辦法", path: "/concentric-law/old-act/old-act02" },
         ]
     }
 ];
