@@ -32,7 +32,7 @@ const themes = ["default", "retro", "cyberpunk", "valentine", "aqua", "lemonade"
         <nav class="navbar w-full py-0 container mx-auto">
             
             <div class="navbar-start">
-                
+                <!-- 手機版選單邏輯 -->
                 <div class="dropdown">
                     <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg>
@@ -41,7 +41,7 @@ const themes = ["default", "retro", "cyberpunk", "valentine", "aqua", "lemonade"
                         {navLinks.map(link => (
                             link.type === 'dropdown' ? (
                                 <li>
-                                    <details>
+                                    <details open>
                                         <summary>{link.name}</summary>
                                         <ul>
                                             {link.children.map(sub => (
@@ -57,15 +57,17 @@ const themes = ["default", "retro", "cyberpunk", "valentine", "aqua", "lemonade"
                     </ul>
                 </div>
 
+                <!-- 網站大標題 -->
                 <a class="btn btn-ghost text-xl" href="/concentric-law/">
                     <span class="lg:hidden">ASHS SA Law</span>
                     <span class="hidden lg:flex">高師大附中學生會自治法規共用系統</span>
-                    <span class="concentric-text-color">
+                    <span class="concentric-text-color"><!-- 內側版本識別 -->
                         concentric
                     </span>
                 </a>
             </div>
 
+            <!-- 電腦版選單邏輯 -->
             <div class="navbar-center hidden lg:flex">
                 <ul class="menu menu-horizontal px-1">
                     {navLinks.map(link => (
@@ -87,6 +89,7 @@ const themes = ["default", "retro", "cyberpunk", "valentine", "aqua", "lemonade"
                 </ul>
             </div>
 
+            <!-- 主題切換選單邏輯 -->
             <div class="navbar-end relative">
                 <div class="dropdown dropdown-end">
                     <div tabindex="0" role="button" class="btn m-1">
