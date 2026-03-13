@@ -27,104 +27,101 @@ const browserTitle = entry.data.abbr || entry.data.title;
   title={browserTitle}
   url={entry.data.url}
 >
-  
-  <main class="main-content">
     
-    <h2 class="page-title">{entry.data.title}</h2>
+  <h2 class="page-title">{entry.data.title}</h2>
 
-    {lawData.history.length > 0 && (
-      <section class="amendment-history">
-        <h3>修法歷程</h3>
-        <ul class="list-disc pl-5">
-          {lawData.history.map((item) => (
-            <li>{item}</li>
-          ))}
-        </ul>
-      </section>
-    )}
+  {lawData.history.length > 0 && (
+    <section class="amendment-history">
+      <h3>修法歷程</h3>
+      <ul class="list-disc pl-5">
+        {lawData.history.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+    </section>
+  )}
 
-    <ActionButtons url={entry.data.url} />
+  <ActionButtons url={entry.data.url} />
 
-    <article class="regulation-content">
-      {lawData.articles.map((item) => {
-        // 渲染章 (h3)
-        if (item.type === 'chapter') {
-          return <h3>{item.text}</h3>;
-        }
-        // 渲染節 (h4)
-        if (item.type === 'section') {
-          return <h4>{item.text}</h4>;
-        }
-        // 渲染條文 (Row) 
-        if (item.type === 'article') {
-          return (
-            <div class="row">
-              {/* 條號 */}
-              <span class="art">
-                第{item.number}條
-              </span>
+  <article class="regulation-content">
+    {lawData.articles.map((item) => {
+      // 渲染章 (h3)
+      if (item.type === 'chapter') {
+        return <h3>{item.text}</h3>;
+      }
+      // 渲染節 (h4)
+      if (item.type === 'section') {
+        return <h4>{item.text}</h4>;
+      }
+      // 渲染條文 (Row) 
+      if (item.type === 'article') {
+        return (
+          <div class="row">
+            {/* 條號 */}
+            <span class="art">
+              第{item.number}條
+            </span>
+            
+            {/* 條文內容區塊 */}
+            <div class="art-data flex-1">
+              {/* 備註 (如果有) */}
+              {item.note && <p class="art-note">（{item.note}）</p>}
               
-              {/* 條文內容區塊 */}
-              <div class="art-data flex-1">
-                {/* 備註 (如果有) */}
-                {item.note && <p class="art-note">（{item.note}）</p>}
-                
-                {/* 內文段落邏輯開始 */}
-                {item.paragraphs.map((par) => {
-                  const text = par.trim();
-                  let pClass = "par";
-                  let marker = ""; // 用來存編號
-                  let content = text; // 用來存內文
+              {/* 內文段落邏輯開始 */}
+              {item.paragraphs.map((par) => {
+                const text = par.trim();
+                let pClass = "par";
+                let marker = ""; // 用來存編號
+                let content = text; // 用來存內文
 
-                  // 1. 判斷並提取 (1) 或 （1）
-                  const itemMatch = text.match(/^([（(]\d+[）)])\s*(.*)/);
-                  if (itemMatch) {
-                    pClass = "item";
-                    marker = itemMatch[1];
-                    content = itemMatch[2].trim();
-                  } 
-                  // 2. 判斷並提取 1 或 1.
-                  else {
-                    // 這裡同時支援 "1" 或 "1." 兩種寫法，視您的 Markdown 習慣而定
-                    const subMatch = text.match(/^(\d+\.?)\s*(.*)/);
-                    if (subMatch) {
-                      pClass = "sub";
-                      marker = subMatch[1];
-                      content = subMatch[2].trim();
-                    }
+                // 1. 判斷並提取 (1) 或 （1）
+                const itemMatch = text.match(/^([（(]\d+[）)])\s*(.*)/);
+                if (itemMatch) {
+                  pClass = "item";
+                  marker = itemMatch[1];
+                  content = itemMatch[2].trim();
+                } 
+                // 2. 判斷並提取 1 或 1.
+                else {
+                  // 這裡同時支援 "1" 或 "1." 兩種寫法，視您的 Markdown 習慣而定
+                  const subMatch = text.match(/^(\d+\.?)\s*(.*)/);
+                  if (subMatch) {
+                    pClass = "sub";
+                    marker = subMatch[1];
+                    content = subMatch[2].trim();
                   }
+                }
 
-                  return (
-                    <div class={pClass}>
-                      {/* 如果有編號，顯示編號 span；沒有則不顯示 */}
-                      {marker && <span class="num-marker">{marker}</span>}{content.trim()}
-                    </div>
-                  );
-                })}
-                {/* 內文段落邏輯結束 */}
-              </div>
+                return (
+                  <div class={pClass}>
+                    {/* 如果有編號，顯示編號 span；沒有則不顯示 */}
+                    {marker && <span class="num-marker">{marker}</span>}{content.trim()}
+                  </div>
+                );
+              })}
+              {/* 內文段落邏輯結束 */}
             </div>
-          );
-        }
-      })}
-    </article>
+          </div>
+        );
+      }
+    })}
+  </article>
 
-    {lawData.attachments.length > 0 && (
-      <section class="attachments-list">
-        <h3 >本法附件</h3>
-        <ul class="attachments">
-          {lawData.attachments.map((att) => (
-            <li>
-              <a href={att.url} target="_blank" class="transition">
-                <span class="att-no">{att.no}</span>
-                <span class="att-title">{att.title}</span>
-                {/* 您可以加上 PDF 圖示 */}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section>
-    )}
+  {lawData.attachments.length > 0 && (
+    <section class="attachments-list">
+      <h3 >本法附件</h3>
+      <ul class="attachments">
+        {lawData.attachments.map((att) => (
+          <li>
+            <a href={att.url} target="_blank" class="transition">
+              <span class="att-no">{att.no}</span>
+              <span class="att-title">{att.title}</span>
+              {/* 您可以加上 PDF 圖示 */}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
 
-  </main>
 </LawLayout>
