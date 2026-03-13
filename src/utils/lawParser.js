@@ -80,7 +80,7 @@ export function parseLawMarkdown(mdContent) {
     }
     else if (currentSection === 'attachments') {
       // 偵測附件格式: 附件1 [標題](連結)
-      const match = line.match(/(附件\d+)\s*\[(.*?)\]\((.*?)\)/);
+      const match = line.match(/(附件\d+(?:-\d+)?)\s*\[(.*?)\]\((.*?)\)/);
       if (match) {
         result.attachments.push({
           no: match[1],
