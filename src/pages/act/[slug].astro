@@ -59,7 +59,7 @@ const browserTitle = entry.data.abbr || entry.data.title;
           <div class="row">
             {/* 條號 */}
             <span class="art">
-              第{item.number}條
+              第{item.number}條{item.subNumber ? `之${item.subNumber}` : ''}
             </span>
             
             {/* 條文內容區塊 */}
@@ -92,12 +92,14 @@ const browserTitle = entry.data.abbr || entry.data.title;
                   }
                 }
 
-                return (
-                  <div class={pClass}>
-                    {/* 如果有編號，顯示編號 span；沒有則不顯示 */}
-                    {marker && <span class="num-marker">{marker}</span>}{content.trim()}
-                  </div>
-                );
+              return (
+                <div class={pClass}>
+                  {/* 如果有編號，顯示編號 span；沒有則不顯示 */}
+                  {marker && <span class="num-marker">{marker}</span>}
+                  {/* 使用 Fragment 與 set:html 來告訴 Astro 這是一段安全的 HTML */}
+                  <Fragment set:html={content.trim()} />
+                </div>
+              );
               })}
               {/* 內文段落邏輯結束 */}
             </div>

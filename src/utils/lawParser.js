@@ -57,14 +57,15 @@ export function parseLawMarkdown(mdContent) {
         result.articles.push({ type: 'section', text: line });
       }
       // 偵測條文 (關鍵邏輯)
-      // Regex: 第(數字)條[(備註)]
-      else if (line.match(/^第\s*(\d+(?:-\d+)?)\s*條/)) {
+      // Regex: 第(數字)條之(數子)[(備註)]
+      else if (line.match(/^第\s*(\d+(?:-\d+)?)\s*條(?:之\s*\d+)?/)) {
         flushArticle(); // 存入上一條
         
-        const match = line.match(/^第\s*(\d+(?:-\d+)?)\s*條(?:\s*[（(](.*?)[）)])?/);
+        const match = line.match(/^第\s*(\d+(?:-\d+)?)\s*條(?:之\s*(\d+))?(?:\s*[（(](.*?)[）)])?/);
         currentArticle = {
-          number: match[1], // 條號
-          note: match[2] || null, // 備註 (括號內的字)
+          number: match[1], // 條號主體 (例如 12)
+          subNumber: match[2] || null, // 「之幾」的數字 (例如 1)
+          note: match[3] || null, // 備註 (括號內的字)
           paragraphs: [] // 內文段落
         };
       } 
