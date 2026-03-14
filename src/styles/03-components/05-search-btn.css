@@ -30,3 +30,7 @@
 .search-container-span {
     @apply mt-1
 }
+/* 新版 */
+.search-highlight {
+    @apply ring-4 ring-error scale-110 transition-all ;
+}
