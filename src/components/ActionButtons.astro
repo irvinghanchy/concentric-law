@@ -11,34 +11,71 @@ const finalUrl = url || defaultUrl;
 ---
 <nav class="grid grid-flow-col-3 min-[397px]:grid-flow-col gap-5 md:mx-2 print:hidden my-4">
   <button class="btn btn-neutral" id="backBtn">回上頁</button>
-  
   <a href={finalUrl} target="_blank" class="btn btn-neutral">
     法規沿革
   </a>
-  
-  <button class="btn btn-neutral" id="copyLinkBtn">複製本頁網址</button>
+  <button class="btn btn-neutral  " id="copyLinkBtn">複製本頁網址</button>
 </nav>
 
 <script>
-  // 處理回上頁
-  const backBtn = document.getElementById('backBtn');
-  backBtn?.addEventListener('click', () => {
-    history.back();
-  });
-
-  // 處理複製連結
-  const copyBtn = document.getElementById('copyLinkBtn');
-  copyBtn?.addEventListener('click', async () => {
-    try {
-      await navigator.clipboard.writeText(window.location.href);
-      // 如果有 toastr，這裡可以呼叫；如果沒有，用簡單的 alert 替代或自定義提示
-      if (typeof toastr !== 'undefined') {
-        toastr.success('已複製網址！');
-      } else {
-        alert('已複製網址！');
-      }
-    } catch (err) {
-      console.error('複製失敗:', err);
+  function initActionButtons() {
+    // 處理回上頁
+    const backBtn = document.getElementById('backBtn');
+    if (backBtn) {
+        // 使用 onclick 避免重複綁定
+        backBtn.onclick = () => {
+            history.back();
+        };
     }
+
+    // 處理複製連結
+    const copyBtn = document.getElementById('copyLinkBtn');
+    if (copyBtn) {
+        copyBtn.onclick = async () => {
+            try {
+                // 執行複製網址 (包含錨點 #article-xx 也會一併複製)
+                await navigator.clipboard.writeText(window.location.href);
+                
+                // 超讚的 UI 視覺回饋：把按鈕變綠色，並改變文字
+                const originalText = copyBtn.innerText;
+                copyBtn.innerText = '已複製網址　';
+                copyBtn.classList.remove('btn-neutral');
+                copyBtn.classList.add('btn-active', 'text-success-content'); // DaisyUI 的綠色成功狀態
+
+                // 2 秒後恢復原狀
+                setTimeout(() => {
+                    copyBtn.innerText = originalText;
+                    copyBtn.classList.remove('btn-active', 'text-success-content');
+                    copyBtn.classList.add('btn-neutral');
+                }, 900);
+
+            } catch (err) {
+                console.error('複製失敗:', err);
+                alert('複製失敗，請手動複製網頁網址。');
+                const originalText = copyBtn.innerText;
+                copyBtn.innerText = '複製網址失敗';
+                copyBtn.classList.remove('btn-neutral');
+                copyBtn.classList.add('btn-active', 'btn-error', 'text-error-content');
+
+                setTimeout(() => {
+                  copyBtn.innerText = originalText;
+                  copyBtn.classList.remove('btn-active', 'btn-error', 'text-error-content');
+                  copyBtn.classList.add('btn-neutral');
+                }, 900);
+
+            }
+        };
+    }
+  }
+
+  // === 完美對接 Astro 生命週期 ===
+  if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initActionButtons);
+  } else {
+      initActionButtons();
+  }
+  
+  document.addEventListener('astro:page-load', () => {
+      if (document.readyState !== 'loading') initActionButtons();
   });
 </script>
