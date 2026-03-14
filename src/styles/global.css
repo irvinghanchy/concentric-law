@@ -62,5 +62,5 @@
     animation: color-change 4s infinite ease-in-out;
     font-family: "Alfa Slab One", serif;
     font-weight: 400;
-    @apply bg-gradient-to-r from-primary via-secondary to-accent bg-[length:200%_auto] bg-clip-text text-transparent text-2xl
+    @apply bg-gradient-to-r from-primary via-secondary to-accent bg-[length:200%_auto] bg-clip-text text-transparent text-xl italic
 }
