@@ -29,11 +29,11 @@ const browserTitle = entry.data.abbr || entry.data.title;
   url={entry.data.url}
 >
     
-  <h2 class="page-title">{entry.data.title}</h2>
+  <h2 class="page-title" id="page-title">{entry.data.title}</h2>
 
   {lawData.history.length > 0 && (
     <section class="amendment-history">
-      <h3>修法歷程</h3>
+      <h3 id="amendment-history">修法歷程</h3>
       <ul class="list-disc pl-5">
         {lawData.history.map((item) => (
           <li>{item}</li>
@@ -48,11 +48,11 @@ const browserTitle = entry.data.abbr || entry.data.title;
     {lawData.articles.map((item) => {
       // 渲染章 (h3)
       if (item.type === 'chapter') {
-        return <h3>{item.text}</h3>;
+        return <h3 id={item.text}>{item.text}</h3>;
       }
       // 渲染節 (h4)
       if (item.type === 'section') {
-        return <h4>{item.text}</h4>;
+        return <h4 id={item.text}>{item.text}</h4>;
       }
       // 渲染條文 (Row) 
       if (item.type === 'article') {

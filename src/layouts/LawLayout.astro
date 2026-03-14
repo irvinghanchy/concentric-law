@@ -5,7 +5,7 @@ import Footer from '../components/Footer.astro';
 import PageSearch from '../components/PageSearch.astro';
 import ScrollToTop from '../components/ScrollToTop.astro';
 import BaseHead from '../components/BaseHead.astro';
-import ActionButtons from '../components/ActionButtons.astro';
+import TableOfContents from '../components/TableOfContents.astro';
 
 const { title, description, url } = Astro.props;
 
@@ -17,8 +17,9 @@ const { title, description, url } = Astro.props;
 
 <body>
     <Navbar />
+    <TableOfContents />
 
-    <main class="main-content">
+    <main class="main-content" id="law-main-content">
         <div class="law-content">
             <slot />
         </div>
