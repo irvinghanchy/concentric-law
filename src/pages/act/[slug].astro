@@ -56,12 +56,21 @@ const browserTitle = entry.data.abbr || entry.data.title;
       }
       // 渲染條文 (Row) 
       if (item.type === 'article') {
+        // 1. 動態計算錨點 ID：如果有 subNumber 就加上「-Y」，否則只有主條號
+        const anchorId = item.subNumber 
+          ? `article-${item.number}-${item.subNumber}` 
+          : `article-${item.number}`;
+
         return (
-          <div class="row">
+          // 2. 將計算好的 ID 賦予給 row，這樣點擊連結時網頁才會跳到這裡
+          <div class="row" id={anchorId}>
             {/* 條號 */}
             <span class="art">
-              <a href={"#article-"+item.number} class="law-btn-anchor">＃</a>
-              第{item.number}條{item.subNumber ? `之${item.subNumber}` : ''}
+              {/* 3. 加入錨點連結 */}
+              <a href={`#${anchorId}`} class="law-btn-anchor">＃</a>
+              <p>
+                第{item.number}條{item.subNumber ? `之${item.subNumber}` : ''}
+              </p>
             </span>
             
             {/* 條文內容區塊 */}

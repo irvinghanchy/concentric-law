@@ -38,9 +38,10 @@
 /* --- 02. 法規錨點按鈕 */
 .law-btn-anchor{
     @apply btn btn-xs btn-ghost text-xs text-base-content/45 font-bold;
-    @apply px-1; /* 複寫 daisy ui 內建的 btn 寬度 */
+    @apply px-1 w-5; /* 複寫 daisy ui 內建的 btn 寬度 */
     font-family: "Noto Sans TC";
-    margin-top: -0.2rem; /* 微調錨點按鈕位置，對齊文字中線 */
+    margin-top: -0.22rem; /* 微調錨點按鈕位置，對齊文字中線 */
+    /* display: inline;  */
 }
 
 /* --- 03. 共用模組載入動畫 --- */
