@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import LawLayout from '../../layouts/LawLayout.astro';
 import { parseLawMarkdown } from '../../utils/lawParser';
 import ActionButtons from '../../components/ActionButtons.astro';
+import 'katex/dist/katex.min.css';
 
 
 // 1. 生成靜態路徑
@@ -128,3 +129,34 @@ const browserTitle = entry.data.abbr || entry.data.title;
   )}
 
 </LawLayout>
+
+<!-- katex 公式載入 -->
+<script>
+  // 透過 ES Module 載入自動渲染工具，Astro 會處理打包
+  import renderMathInElement from 'katex/dist/contrib/auto-render.mjs';
+
+  function initKaTeX() {
+      console.log("[KaTeX NPM] 開始掃描與渲染公式...");
+      
+      // 只掃描法規內容區塊，提升效能
+      const article = document.querySelector('.regulation-content');
+      
+      if (article) {
+          renderMathInElement(article, {
+              delimiters: [
+                  {left: '$$', right: '$$', display: true},  // 獨立區塊公式
+                  {left: '$', right: '$', display: false}    // 行內公式
+              ],
+              throwOnError: false // 語法錯誤時顯示原碼，不崩潰
+          });
+          console.log("[KaTeX NPM] 渲染成功！");
+      } else {
+          console.warn("[KaTeX NPM] 找不到 .regulation-content 區塊");
+      }
+  }
+
+  // 確保 DOM 樹建立後才執行
+  document.addEventListener('DOMContentLoaded', initKaTeX);
+  // 若未來有啟用 View Transitions 換頁，確保切換回來時公式不失效
+  document.addEventListener('astro:page-load', initKaTeX);
+</script>
