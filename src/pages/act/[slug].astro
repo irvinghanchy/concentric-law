@@ -59,6 +59,7 @@ const browserTitle = entry.data.abbr || entry.data.title;
           <div class="row">
             {/* 條號 */}
             <span class="art">
+              <a href={"#article-"+item.number} class="law-btn-anchor">＃</a>
               第{item.number}條{item.subNumber ? `之${item.subNumber}` : ''}
             </span>
             
