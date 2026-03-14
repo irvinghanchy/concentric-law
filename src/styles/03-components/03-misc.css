@@ -22,8 +22,8 @@
     /* cursor: pointer; 鼠標變成手形 */
     /* box-shadow: 0 2px 5px rgba(0,0,0,0.2); 陰影效果 */
     /* transition: background-color 1.75s, transform 2s; 平滑過渡效果 */
-    opacity: 0;
-    visibility: hidden;
+    /* opacity: 0; */
+    /* visibility: hidden; */
 }
 /* #scrollToTopBtn:hover {
     background-color: #505430; 鼠標懸停時的顏色 */
